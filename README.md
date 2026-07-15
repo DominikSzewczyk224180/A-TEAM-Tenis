@@ -1,54 +1,61 @@
-# Korty Tenisowe A-TEAM Rydułtowy — strona internetowa
+# Korty Tenisowe A-TEAM Rydułtowy, strona internetowa
 
-Statyczna strona typu one-page (HTML + CSS + JavaScript, bez frameworków i bez
-backendu). Gotowa do umieszczenia na **GitHub Pages** za darmo.
+Statyczna strona (HTML + CSS + JavaScript, bez frameworków i bez backendu),
+gotowa do umieszczenia na **GitHub Pages** za darmo. Oprócz strony głównej
+zawiera stronę **ligi** (tabela wyników z edycją po haśle) oraz stronę
+**rezerwacji kortu online** (siatka wolnych godzin).
 
 ---
 
-## 📁 Struktura plików
+## Struktura plików
 
 ```
 a-team-tennis/
-├── index.html          ← cała treść strony
-├── favicon.svg         ← ikona w karcie przeglądarki
+├── index.html          → strona główna
+├── liga.html           → tabela ligi (grupy, punktacja, edycja po haśle)
+├── rezerwacje.html     → rezerwacja kortu online (wolne godziny)
+├── favicon.svg         → ikona w karcie przeglądarki
 ├── css/
-│   └── styles.css       ← wygląd (kolory, czcionki, layout)
+│   └── styles.css       → cały wygląd (kolory, czcionki, layout)
 ├── js/
-│   └── main.js          ← interakcje (menu, galeria, formularz, animacje)
+│   ├── nav.js           → wspólne: menu, nagłówek, animacje (wszystkie strony)
+│   ├── main.js          → strona główna: liczby, galeria
+│   ├── store.js         → dane ligi i rezerwacji + hasła (patrz niżej)
+│   ├── liga.js          → obsługa tabeli ligi
+│   └── rezerwacje.js    → obsługa siatki rezerwacji
 └── images/
-    ├── hero-players.jpg  ← główne zdjęcie (gracze + niebo)
-    ├── court-banner.jpg  ← kort z bannerem „A-TEAM"
-    ├── court-evening.jpg ← korty o zmierzchu (tło sekcji Liga)
-    ├── court-clay.jpg    ← zbliżenie na mączkę
-    └── og-image.jpg      ← miniatura przy udostępnianiu linku
+    ├── hero-players.jpg  → główne zdjęcie (gracze + niebo)
+    ├── court-banner.jpg  → kort z bannerem „A-TEAM"
+    ├── court-evening.jpg → korty o zmierzchu (tło sekcji Liga)
+    ├── court-clay.jpg    → zbliżenie na mączkę
+    └── og-image.jpg      → miniatura przy udostępnianiu linku
 ```
 
 ---
 
-## 🚀 Jak opublikować na GitHub Pages
+## Jak opublikować na GitHub Pages
 
-### Sposób 1 — przez stronę GitHub (najprościej, bez instalowania niczego)
+### Sposób 1: przez stronę GitHub (najprościej, bez instalowania niczego)
 
 1. Załóż konto na <https://github.com> (jeśli jeszcze nie masz).
 2. Kliknij **New repository** (zielony przycisk).
    - **Repository name:** np. `a-team-tennis` (albo dowolna nazwa).
    - Ustaw **Public**.
-   - Zaznacz **Add a README** — możesz, to nie przeszkadza.
    - Kliknij **Create repository**.
-3. Wejdź w utworzone repozytorium → **Add file → Upload files**.
+3. Wejdź w utworzone repozytorium, potem **Add file → Upload files**.
 4. Przeciągnij **całą zawartość** folderu `a-team-tennis`
-   (czyli `index.html`, `favicon.svg` oraz foldery `css`, `js`, `images`).
+   (czyli `index.html`, `liga.html`, `rezerwacje.html`, `favicon.svg`
+   oraz foldery `css`, `js`, `images`).
    > Ważne: wrzucasz to, co jest **w środku** folderu, a nie sam folder.
    > Plik `index.html` musi być w głównym katalogu repozytorium.
 5. Na dole strony kliknij **Commit changes**.
 6. Wejdź w **Settings → Pages** (menu po lewej).
 7. W sekcji **Build and deployment → Source** wybierz **Deploy from a branch**.
-8. W **Branch** wybierz `main` oraz folder `/ (root)` → **Save**.
-9. Odczekaj 1–2 minuty i odśwież stronę. Pojawi się adres w stylu:
+8. W **Branch** wybierz `main` oraz folder `/ (root)`, potem **Save**.
+9. Odczekaj 1 do 2 minut i odśwież stronę. Pojawi się adres w stylu:
    `https://twoja-nazwa.github.io/a-team-tennis/`
-   To jest link do gotowej strony. 🎉
 
-### Sposób 2 — przez git (jeśli wolisz konsolę)
+### Sposób 2: przez git (jeśli wolisz konsolę)
 
 ```bash
 # w folderze a-team-tennis:
@@ -64,61 +71,112 @@ Następnie tak samo: **Settings → Pages → Deploy from a branch → main → 
 
 ---
 
-## ✏️ Jak edytować treść
+## Liga: jak to działa i jak edytować wyniki
 
-Wszystko jest po polsku i podpisane w `index.html`. Najczęstsze zmiany:
+Strona `liga.html` pokazuje tabelę w trzech grupach (A, B, C). Punktacja:
+2 punkty za wygrany mecz, 1 punkt za rozegraną porażkę. Kolejność ustala się
+po punktach, a przy remisie po bilansie setów.
 
-| Co chcesz zmienić | Gdzie szukać w `index.html` |
+- **Podgląd bez logowania.** Każdy widzi tabelę.
+- **Edycja po haśle.** Przycisk „Zaloguj, aby edytować" prosi o hasło.
+  Hasło grupy odblokowuje edycję tylko tej jednej grupy. Hasło prowadzącego
+  odblokowuje wszystkie grupy i przycisk „Przywróć dane przykładowe".
+- W trybie edycji wpisuje się liczbę wygranych, porażek i setów.
+  Mecze i punkty przeliczają się same. „Zapisz zmiany" zapisuje tabelę.
+
+## Rezerwacje: jak to działa
+
+Strona `rezerwacje.html` pokazuje siatkę: dni u góry, godziny po lewej,
+trzy korty w kolumnach. Zielone pole jest wolne, kliknięcie otwiera okienko
+rezerwacji (imię + telefon). Zajęte pola są wyszarzone. Po zalogowaniu jako
+prowadzący pojawia się możliwość odwołania rezerwacji i wyczyszczenia grafiku.
+
+---
+
+## Hasła (WAŻNE)
+
+Hasła ustawia się na górze pliku `js/store.js`:
+
+```
+var ADMIN_PASSWORD = 'ateam-admin';          // prowadzący (pełny dostęp)
+
+var GROUPS = [
+  { id: 'a', name: 'Grupa A', ..., pass: 'grupa-a' },
+  { id: 'b', name: 'Grupa B', ..., pass: 'grupa-b' },
+  { id: 'c', name: 'Grupa C', ..., pass: 'grupa-c' }
+];
+```
+
+Hasła startowe (demo, **koniecznie zmień przed pokazaniem strony na żywo**):
+
+| Rola | Hasło |
 |---|---|
-| Numer telefonu | wyszukaj `507 146 610` (jest w kilku miejscach) oraz `+48507146610` |
-| Adres | wyszukaj `Bema 126C` |
-| Godziny otwarcia | sekcja z tabelą „Godziny otwarcia" |
-| Cena za kort | wyszukaj `40 zł` |
-| Teksty sekcji | edytuj bezpośrednio między znacznikami `<p>…</p>` i `<h2>…</h2>` |
+| Prowadzący (wszystkie grupy) | `ateam-admin` |
+| Grupa A | `grupa-a` |
+| Grupa B | `grupa-b` |
+| Grupa C | `grupa-c` |
 
-> Numer telefonu w formularzu (do wysyłki SMS) zmienia się w `js/main.js`
-> — na górze pliku jest linia `const PHONE = '+48507146610';`.
+> **To nie jest prawdziwe zabezpieczenie.** W wersji tylko front-end każdy,
+> kto otworzy kod strony, może odczytać hasła. Chroni to grafik „grzecznościowo"
+> przed przypadkową edycją, ale nie przed kimś, kto naprawdę chce coś zmienić.
+> Prawdziwe logowanie wymaga backendu (patrz sekcja niżej).
+
+## Gdzie zapisują się dane
+
+Wyniki ligi i rezerwacje trzymane są w przeglądarce (localStorage). Oznacza to:
+
+- Zmiany widzi tylko ta osoba, na tym urządzeniu i w tej przeglądarce.
+- Wpis z jednego telefonu **nie pojawi się** na innym urządzeniu.
+- Wyczyszczenie danych przeglądarki kasuje zmiany.
+
+To celowe rozwiązanie na etap „tylko front-end": strona działa od razu na
+GitHub Pages, bez serwera, i pokazuje pełny wygląd oraz zachowanie docelowej
+funkcji.
+
+## Krok w przyszłość: prawdziwy backend i panel admina
+
+Cała logika danych jest w jednym miejscu (`js/store.js`), a reszta stron
+(`liga.js`, `rezerwacje.js`) korzysta wyłącznie z jego funkcji. Dzięki temu
+podłączenie serwera nie wymaga przerabiania wyglądu, wystarczy zamienić środek
+tych funkcji na zapytania do API:
+
+- `getLeague`, `saveGroup`, `resetLeague` (dane ligi),
+- `getReservations`, `book`, `cancel`, `resetReservations` (rezerwacje),
+- `checkPassword` (logowanie), oraz wewnętrzne `read` i `write` (odczyt/zapis).
+
+Wtedy dane będą wspólne dla wszystkich, rezerwacje trafią do klubu, a panel
+prowadzącego stanie się prawdziwym logowaniem z hasłami po stronie serwera.
+
+---
+
+## Jak edytować treść strony głównej
+
+Wszystko jest po polsku w `index.html`. Najczęstsze zmiany:
+
+| Co chcesz zmienić | Gdzie szukać |
+|---|---|
+| Numer telefonu | wyszukaj `507 146 610` oraz `+48507146610` |
+| Adres | wyszukaj `Bema 126C` |
+| Godziny otwarcia | sekcja „Godziny otwarcia" w `index.html` |
+| Cena za kort | wyszukaj `40 zł` |
+| Godziny w rezerwacjach | funkcja `slotsForDate` w `js/store.js` |
+| Nazwy kortów | tablica `COURTS` w `js/store.js` |
+| Teksty sekcji | edytuj między znacznikami `<p>…</p>` i `<h2>…</h2>` |
 
 ### Podmiana zdjęć
 
 Wrzuć własne zdjęcia do folderu `images/` i albo nazwij je tak samo jak
-obecne (wtedy nic więcej nie musisz robić), albo zmień nazwy plików w
-`index.html` (wyszukaj np. `hero-players.jpg`).
-
-**Wskazówka:** najlepiej prezentuje się zdjęcie z graczami i błękitnym niebem —
-dlatego jest ustawione jako główne (hero). Jeśli w przyszłości zrobisz lepsze,
-słoneczne ujęcia kortów, warto je podmienić — strona od razu zyska.
+obecne, albo zmień nazwy plików w `index.html` (wyszukaj np. `hero-players.jpg`).
 
 ---
 
-## 📩 (Opcjonalnie) Prawdziwa wysyłka rezerwacji na e-mail
+## O projekcie (dla ciekawych)
 
-Obecnie formularz **nie wysyła** danych na serwer — przygotowuje gotową
-wiadomość, którą klient wysyła SMS-em lub potwierdza telefonicznie. To celowe:
-nie wymaga backendu i działa od razu na GitHub Pages.
-
-Jeśli chcesz dostawać rezerwacje na e-mail, możesz podłączyć darmową usługę
-np. **Formspree** (<https://formspree.io>):
-
-1. Załóż konto, utwórz formularz — dostaniesz adres typu
-   `https://formspree.io/f/xxxxxx`.
-2. W `index.html` znajdź `<form … id="rezForm">` i zamień na:
-   `<form action="https://formspree.io/f/xxxxxx" method="POST" id="rezForm">`.
-3. W `js/main.js` można wtedy wyłączyć blokadę `e.preventDefault()` w obsłudze
-   formularza (albo zostawić obecne działanie jako dodatek).
-
-Bez tego kroku strona działa w 100% poprawnie — to tylko rozszerzenie.
-
----
-
-## 🎨 O projekcie (dla ciekawych)
-
-- **Kolory:** butelkowa zieleń (tożsamość marki) + ceglana czerwień mączki
-  (akcent, przyciski) + biel linii kortu (motyw przewodni).
+- **Kolory:** butelkowa zieleń (tożsamość marki), ceglana czerwień mączki
+  (akcent, przyciski) i biel linii kortu (motyw przewodni).
 - **Czcionki (Google Fonts):** Archivo (nagłówki), Inter (tekst),
-  Space Mono (liczby / etykiety / „tablica wyników").
-- **Motyw przewodni:** białe linie kortu tenisowego — w logo, w tle hero
-  i w drobnych detalach.
-- Strona jest responsywna (działa na telefonie i komputerze), ma animacje
-  pojawiania się sekcji oraz respektuje ustawienie „ogranicz ruch"
-  w systemie użytkownika.
+  Space Mono (liczby, etykiety, „tablica wyników").
+- **Motyw przewodni:** białe linie kortu tenisowego w logo, w tle hero
+  i na banerach podstron.
+- Strona jest responsywna, ma animacje pojawiania się sekcji i respektuje
+  systemowe ustawienie „ogranicz ruch".
